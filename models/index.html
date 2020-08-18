@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>My first three.js app</title>
+    <style>
+      body { margin: 0; }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/GLTFLoader.js"></script>
+    <script>
+      var scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xdddddd);
+      var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
+
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      var geometry = new THREE.BoxGeometry();
+      var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+      var cube = new THREE.Mesh( geometry, material );
+      scene.add( cube );
+
+      camera.position.set( 2, 3, 2 );
+      camera.lookAt( 5, 0, 4 );
+
+      var hemiLight = new THREE.HemisphereLight( 0xffeeb1, 0x080820, 8 );
+      scene.add(hemiLight);
+
+      var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+      var points = [];
+      points.push( new THREE.Vector3( - 10, 0, 0 ) );
+      points.push( new THREE.Vector3( 0, 10, 0 ) );
+      points.push( new THREE.Vector3( 10, 0, 0 ) );
+
+      var geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+      var line = new THREE.Line( geometry, material );
+
+      scene.add( line );
+
+      var loader = new THREE.FontLoader();
+
+      loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+        var geometry = new THREE.TextGeometry( 'Hello three.js!', {
+          font: font,
+          size: 80,
+          height: 5,
+          curveSegments: 12,
+          bevelEnabled: true,
+          bevelThickness: 10,
+          bevelSize: 8,
+          bevelOffset: 0,
+          bevelSegments: 5
+        });
+
+        scene.add(geometry);
+      });
+
+
+
+      renderer.toneMapping = THREE.ReinhardToneMapping;
+      renderer.toneMappingExposure = 2.3;
+      renderer.shadowMap.enabled = true;
+
+      var spotLight = new THREE.SpotLight( 0xffeeb1, 4 );
+      spotLight.castShadow = true;
+      scene.add(spotLight);
+
+      var controls = new THREE.OrbitControls(camera, renderer.domElement)
+      scene.add(new THREE.AxesHelper(500))
+
+      var animate = function () {
+        requestAnimationFrame( animate );
+
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        renderer.render( scene, camera );
+        spotLight.position.set(
+          camera.position.x + 10,
+          camera.position.y + 10,
+          camera.position.z + 10,
+        )
+      };
+
+      new THREE.GLTFLoader().load('model/scene.gltf', result => {
+        model = result.scene.children[0];
+        model.position.set(0,0,0);
+        model.traverse(n => {
+          if (n.isMesh) {
+            n.castShowdow = true;
+            n.receiveShadow = true;
+          }
+        })
+        scene.add(model);
+        animate();
+      })
+
+      // animate();
+    </script>
+  </body>
+</html>
