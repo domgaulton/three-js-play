@@ -1,11 +1,12 @@
 # Three JS Helpers
 
 ## Useful Links
-GTLF Files - https://sketchfab.com/tags/gltf
-Three JS - https://threejs.org/
+* GTLF Files - https://sketchfab.com/tags/gltf
+* Three JS - https://threejs.org/
 
 
 ## Top Level
+* These are top level functions that will get your project up and running
 
 ### Init() Function
 ```js
@@ -20,6 +21,7 @@ let object2;
 
 const init = () => {
   // Put your containers camera renderer and scene in here
+  animate();
 }
 
 const animate = () => {
@@ -49,6 +51,7 @@ camera.position.set(0, 5, 30);
 ```
 
 ### Renderer
+* https://threejs.org/docs/#api/en/renderers/WebGLRenderer
 ```js
 renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
@@ -69,20 +72,16 @@ const animate = () => {
 
 ### X Y Z Axis
 * Use the following to help you develop `scene.add(new THREE.AxesHelper(500))` where 500 is the length of these axis
-
-#### X
-The 2D plane in front of you from left and right
-
-#### Y
-The 2D plane in front of you from up and down
-
-#### Z
-The 3rd dimension plane (depth) in front of you far and close
+* **X** - The 2D plane in front of you from left and right
+* **Y** - The 2D plane in front of you from up and down
+* **Z** - The 3rd dimension plane (depth) in front of you far and close
 
 
 ## Common Functions
+* Useful functions for projects
 
 ### Shapes
+* Rendering shapes
 
 #### Cube
 * https://threejs.org/docs/#api/en/geometries/BoxGeometry
@@ -102,9 +101,11 @@ sphere = new THREE.Mesh( geometrySphere, materialSphere );
 scene.add(sphere);
 ```
 
-### Lights
+### Lighting
+* Rendering lights in various ways
 
 #### Hemisphere Light
+* A general light like the sun
 * https://threejs.org/docs/#api/en/lights/HemisphereLight
 ```js
 hemiLight = new THREE.HemisphereLight( 0xffeeb1, 0x080820, 8 );
@@ -112,7 +113,8 @@ scene.add(hemiLight);
 ````
 
 #### Spotlight
-
+* A light source
+* https://threejs.org/docs/#api/en/lights/SpotLight
 ```js
 spotlight = new THREE.SpotLight( 0xffeeb1, 4 );
 spotlight.castShadow = true;
@@ -129,9 +131,11 @@ const animate = () => {
 ```
 
 ### Loaders
+* Loading in files
 
 #### GLTF Loader 
 * Requires `GLTFLoader.js` which can be found in the three js download file `/examples/js/loaders/GLTFLoader.js`
+* If you use a loader, make sure you run `animate()` once the item has loaded
 
 ```js
 loader = new THREE.GLTFLoader();
@@ -143,6 +147,7 @@ loader.load("./path-to/file.gltf", data => {
 ```
 
 ### Controls
+* Mouse / keyboard controls
 
 #### First Person Controls
 * Requires `FirstPersonControls.js` which can be found in the three js download file `/examples/js/controls/FirstPersonControls.js`
@@ -187,8 +192,10 @@ controls = new THREE.OrbitControls(camera, renderer.domElement)
 ```
 
 ### Helpful Functions
+* Other functions that are useful to projects
 
 #### Window Resize
+* On window resize
 ```js
 const onWindowResize = () => {
   camera.aspect = container.clientWidth / container.clientHeight;
