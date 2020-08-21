@@ -42,8 +42,6 @@ const init = () => {
   scene.add(sphere);
 
   pivotPoint = new THREE.Object3D();
-  pp = new THREE.Group();
-  console.log(pivotPoint, pp)
   pivotPoint.add(sphere);
   pivotPoint.add(light);
 
@@ -71,7 +69,12 @@ const animate = () => {
   house.rotation.z += 0.005;
   sphere.rotation.z += 0.01;
   pivotPoint.rotation.z -= (0.05 * Math.cos(0.05));
-  pivotPoint.rotation.x += (0.0005 * Math.sin(90));;
+  if ( sphere.getWorldPosition().y < 4.5 || sphere.getWorldPosition().y > 5.5  ) {
+    pivotPoint.rotation.x += (0.005 * Math.sin(1));;
+  } else {
+    pivotPoint.rotation.x -= (0.005 * Math.sin(1));;
+  }
+  
   renderer.render(scene, camera);
 }
 
