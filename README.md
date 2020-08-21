@@ -191,6 +191,30 @@ const animate = () => {
 controls = new THREE.OrbitControls(camera, renderer.domElement)
 ```
 
+### Animation
+
+#### Pivot Point
+* To create a pivot point 
+```js
+pivotPoint = new THREE.Object3D(); // || pivotPoint = new THREE.Group(); (this works too)
+pivotPoint.add(sphere); // A sphere to replicate the position of the light
+pivotPoint.add(light); // e.g. Spotlight
+```
+
+* Set center of the pivot point and link to object (and scene indirectly as long as object has been added to scene)
+```js
+object1.add(pivotPoint);
+```
+* To set the center of the pivot point
+```js
+const animate = () => {
+  requestAnimationFrame(animate);
+  object1.rotation.z += 0.005;
+  pivotPoint.rotation.z -= 0.05; // The pivot point is fixed to Object 1 so will rotate with it. In this example we rotate the opposite way at same rate to make it appear fixed
+  renderer.render(scene, camera);
+}
+```
+
 ### Helpful Functions
 * Other functions that are useful to projects
 
