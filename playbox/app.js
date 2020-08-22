@@ -9,6 +9,7 @@ let house;
 // Light Source
 let geometrySphere;
 let materialSphere;
+let positionSphere;
 let light;
 let sphere;
 let pivotPoint;
@@ -40,6 +41,8 @@ const init = () => {
   sphere = new THREE.Mesh( geometrySphere, materialSphere );
   sphere.position.set(5, 5, 5);
   scene.add(sphere);
+    positionSphere = new THREE.Vector3(); // Required for a position in 3d space later - sphere.getWorldPosition(positionSphere)
+
 
   pivotPoint = new THREE.Object3D();
   pivotPoint.add(sphere);
@@ -69,7 +72,7 @@ const animate = () => {
   house.rotation.z += 0.005;
   sphere.rotation.z += 0.01;
   pivotPoint.rotation.z -= (0.05 * Math.cos(0.05));
-  if ( sphere.getWorldPosition().y < 4.5 || sphere.getWorldPosition().y > 5.5  ) {
+  if ( sphere.getWorldPosition(positionSphere).y < 4.5 || sphere.getWorldPosition(positionSphere).y > 5.5  ) {
     pivotPoint.rotation.x += (0.005 * Math.sin(1));;
   } else {
     pivotPoint.rotation.x -= (0.005 * Math.sin(1));;

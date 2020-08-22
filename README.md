@@ -215,6 +215,25 @@ const animate = () => {
 }
 ```
 
+### Position
+* Get the position of something (if it is moving put in animate loop)
+
+#### Get World Position
+* https://threejs.org/docs/#api/en/core/Object3D.getWorldPosition
+* In the example below we create a sphere and then assign a variable for it's position in 3d space
+
+```js
+geometrySphere = new THREE.SphereBufferGeometry( 1, 32, 32 );
+materialSphere = new THREE.MeshBasicMaterial( { color: 0xFFFFE0 } );
+sphere = new THREE.Mesh( geometrySphere, materialSphere );
+sphere.position.set(5, 5, 5);
+scene.add(sphere);
+
+// Important bits
+positionSphere = new THREE.Vector3(); // Required for a 3d position 
+sphere.getWorldPosition(positionSphere) // Without setting the target of Vector3() it works but you get an error
+```
+
 ### Helpful Functions
 * Other functions that are useful to projects
 
